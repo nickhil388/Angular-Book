@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Filters Angular JS</title>
+	<script type="text/javascript" src="script/angular.min.js"> </script>
+</head>
+<body ng-app="app" ng-controller="main">
+
+<div>
+		<h2 > 	{{msg | upper}} </h2>
+		<h2 > 	{{msg2 | upper}}    {{msg2 | low}}</h2>
+</div>
+
+<script type="text/javascript">
+	var app = angular.module('app', []);
+	app.filter('upper', function () {
+		return function (val){
+			return val.toUpperCase();
+		}
+	})
+	app.filter('low', function () {
+		return function (val){
+			return val.toLowerCase();
+		}
+	})
+
+	app.controller('main', function($scope){
+		$scope.msg= "hello world";
+		$scope.msg2="asdASDSADasdsadASDs"
+	});
+
+</script>
+
+</body>
+</html>

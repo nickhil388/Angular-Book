@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="script/angular.min.js"></script>
+</head>
+<body ng-app="app" ng-controller="mainController">
+
+
+
+<div style="height:480px;width:640px;">
+
+ <div slideshow style="height:480px;width:640px;" > </div>
+<br>
+ <button style="float:left;" previous-slide>Previous</button>
+
+ <button style="float:right;" next-slide>Next</button>
+
+</div>
+
+
+
+
+</div>
+
+<script type="text/javascript">
+	
+	var app=angular.module('app',[]);
+	app.directive('slideshow', function(){
+		return {
+			restrict : 'AE',
+			link     : function($scope,elem,attr){
+				$scope.$watch('index',function(v){
+					if(v>4)
+					{	$scope.index=0;}
+					else if(v<0)
+					{ $scope.index=4;}
+				elem.css({"background-image":"url('"+$scope.images[$scope.index]+ "')"});	
+				})
+			}
+
+		}
+	});
+
+	app.directive('previousSlide', function(){
+		return {
+			restrict : 'AE',
+			link     : function($scope,elem,attr){
+			elem.bind('click',function(){
+				$scope.$apply(function(){
+					$scope.index--;
+				});
+			})
+								
+			}
+
+		}
+	});
+
+	app.directive('nextSlide', function(){
+		return {
+			restrict : 'AE',
+			link     : function($scope,elem,attr){
+				elem.bind('click',function(){
+				$scope.$apply(function(){
+					$scope.index++;	
+				});
+						
+				});
+			}
+
+		}
+	});
+
+
+
+	app.controller('mainController', function($scope){
+		$scope.images = ['images/1.jpg','images/2.jpg','images/3.jpg','images/4.jpg','images/5.jpg'];
+		$scope.index=0;
+
+	});
+
+
+</script>
+</body>
+</html>

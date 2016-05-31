@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="script/angular.min.js"></script>
+</head>
+<body ng-app="app" >
+
+<div>
+
+<p some-directive> This is content of P tag </p>
+
+
+
+</div>
+
+<script>
+	var app = angular.module('app',[]);
+	
+	app.directive('someDirective' ,function(){
+		return {
+				transclude : true,
+				template :' <h2> This is directive\'s content</h2>  <h1 ng-transclude> This is content of directive</h1>'
+			};
+	});
+
+	
+</script>
+
+</body>
+</html>

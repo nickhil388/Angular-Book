@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Angular Routing</title>
+	
+	<script  src="scripts/angular.min.js"></script>
+	<script  src="scripts/angular.route.js"></script>
+</head>
+<body ng-app="app" ng-controller="mainController">
+<div style="background-color: #E3E2E1;margin-top:-8px;margin-left:-8px; padding-left:15px;padding-bottom:10px; "><br><br>
+<h2> Angular App </h2>
+<b><a href="/#/">Home</a> <a href="#/about/Nik">About</a> <a href="#/temp">Template</a> <a href="#/profile">   Profile</a>  <a href="#/params/helloworld">Params</a>   <a href="#/query/?name=alex&age=4">Query Params</a> <a href="#/location">Location</a>  </b>
+
+
+</div>
+<div ng-view>
+	
+
+</div>
+<script type="text/ng-template" id="temp1">
+<p>
+	First name: <input type="text" ng-model="firstname"/> <br/>
+	Last name: <input type="text" ng-model="lastname"/> <br/>
+</p></script>
+
+<script>
+		
+	var app = angular.module('app',['ngRoute']);
+	app.factory('loadMessage',function($q,$timeout ){
+	return {
+       getMessage: function(){
+		       	       var deferred = $q.defer();
+		               $timeout(function(){
+		               deferred.resolve("Hello From Server.... ");
+		           },2000);
+		           return deferred.promise;
+       }
+   }
+
+	});
+
+	app.directive('about', function(){
+		return {
+
+				$link : function($scope){
+
+				}
+		}
+
+	});
+
+	app.config(function($routeProvider){
+		$routeProvider
+
+		.when('/',{
+			template    : '<b> Welcome ',
+		})
+		.when('/about/:name',{
+			templateUrl : 'about.html',
+			controller  : 'about',
+			
+		})
+		.when('/profile',{
+		    template : '<b> Profile Page <br> Message  : {{msg}} </b>',
+			controller  : function($scope, dep){
+				$scope.msg = dep;
+			},
+			resolve :{
+				dep : function(loadMessage){
+				  return loadMessage.getMessage();	
+				} 
+			}
+		}).when('/params/:name',{
+		    template : '<b> Params Received: {{name}} </b>',
+			controller  : function($scope,$routeParams){
+				$scope.name = $routeParams.name;
+			}
+			
+		}).when('/query/',{
+		    template : '<b> Query Params Received: {{name}}  {{age}} </b>',
+			controller  : function($scope,$routeParams,$location,$timeout){
+				$scope.name = $routeParams.name;
+				$scope.age = 'Redirecting . . .';
+				$timeout(function(){
+				   $location.path('');
+				},2000);
+					
+			}
+		})
+		.when('/location/',{
+			template : '<b>Protocol : {{loc.proto}}<br>Host : {{loc.host}}<br>Port : {{loc.port}}		 <br>Url : {{loc.url}}<br> Path : {{loc.path}} <br> absUrl : {{loc.absurl}}			<br> Search : {{loc.search.asd}} <br> hash : {{loc.hash}}  </b>',
+			controller  : function($scope,$location){
+					
+					$scope.loc = {
+						proto :  $location.protocol(),
+						host  :  $location.host(),
+						port  :  $location.port(),
+						abs   :  $location.absUrl(),
+						url   :  $location.url(),
+						absurl:  $location.absUrl(),
+						path  :  $location.path(),
+						search:  $location.search(),
+						hash  :  $location.hash()
+					};
+
+				//	console.log($location.hash("name"));	
+			}
+		})
+		.when('/temp',{
+			templateUrl : 'temp1'
+		})
+		.otherwise({
+           template: '<h1 style="color:red;"><b>404 Error !</b> </h1>'
+      });;
+	//	$locationProvider.html5Mode(true);
+	});
+
+
+	app.controller('mainController', function($scope, $routeParams,$rootScope) {
+			$scope.msg = "This is from scope";
+			$scope.fname = $routeParams.fname;
+			$scope.$emit('warning', function(){
+				return "System is going to Halt!";
+			})
+
+			$scope.$on('warning',function(event,args){
+				console.log(event);
+				console.log(args);
+			});
+			console.log('name');
+			console.log($routeParams.fname);
+	})
+
+	app.controller('about', function($scope, $routeParams) {
+			$scope.name = $routeParams.name;
+		
+			console.log($routeParams.version);
+
+	})
+
+</script>
+</body>
+</html>

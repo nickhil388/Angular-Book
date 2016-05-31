@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="script/angular.min.js"></script>
+</head>
+<body ng-app="app" ng-controller="mainController">
+
+
+
+<div>
+
+<input type="text" attach-model="msg"/> 
+
+{{msg}}
+</div>
+
+<script type="text/javascript">
+	
+	var app=angular.module('app',[]);
+	app.directive('attachModel', function(){
+			return {
+				restrict : 'AE',
+				scope    : {
+					variable :'=attachModel'
+				},
+				link  	 : function($scope,elem,attr){
+					
+							   elem[0].oninput = function(){		 	
+							   	   $scope.$apply(function(){
+								 		$scope.variable= elem[0].value;
+								 	});						 		
+							   };
+					       }
+			} 
+	});
+
+	app.controller('mainController', function($scope){
+		$scope.msg = "Some Message";
+		
+	});
+
+
+</script>
+</body>
+</html>

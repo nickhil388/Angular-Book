@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Controlle As </title>
+	<script type="text/javascript" src="script/angular.js"></script>
+</head>
+<body ng-app="app" >
+
+
+<div ng-controller="one as o">
+	  <input type="text" ng-model="o.name"/> {{o.name}}
+	<div ng-controller="two as t">
+	  <input type="text" ng-model="o.name"/> {{o.name}}	
+	</div>
+</div>
+
+<script>
+		
+	var app = angular.module('app',[]);
+	app.controller('one',function () {
+		this.name = 'alex';
+	});
+
+	app.controller('two',function () {
+		
+	});
+
+</script>
+</body>
+</html>

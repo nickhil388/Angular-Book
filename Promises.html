@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="script/angular.min.js"></script>
+</head>
+<body ng-app="MyApp" >
+<div ng-controller="MainController">
+
+
+
+
+</div>
+
+
+<script type="text/javascript">
+
+var app = angular.module('MyApp',[]);
+app.controller('MainController', function($q) {
+
+  console.log("Controller Initiated");
+  var messageService = $q.defer();
+  //console.log("timer started");
+  messageService.notify('Request Sent');
+  setTimeout(function(){
+    console.log("timer stopped");
+    messageService.resolve("Promise Resolved");
+  },5000);
+
+  var response = messageService.promise;
+
+  response.then(
+    function(res){                   //Success
+        console.log(res);
+    },
+    function(err){                   //Failed
+        console.log(err);
+    },
+    function(notification){          //Notification
+        console.log(notification);
+    }
+    );
+  
+
+});
+
+</script>
+</body>
+</html>

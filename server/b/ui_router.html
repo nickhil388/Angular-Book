@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script type="text/javascript" src="script/angular.js"></script>
+	<script type="text/javascript" src="script/angular-ui-router.min.js"></script>
+</head>
+
+
+<a href="#/page2">Page 2</a><a href="#/page3">Page 3</a>
+<body ng-app="app">
+
+<div ui-view>
+
+
+</div>
+
+
+<script>
+var app = angular.module('app',['ui.router']);
+	app.config(function($stateProvider) {
+  		$stateProvider
+		    .state('root', {
+			        url: '/root',
+			        template: '<h1>HELLO</h1>'
+    		})
+    		 .state('page2', {
+			        url        : '/page2',
+			        template   : '<h1>Page 2</h1>',
+			        data 	   :{
+			        		name : 'page2 Varaible'
+			        },
+			        controller : 'page2Controller',
+			        onEnter    : function(){
+			        	console.log("State Loaded");
+			        },
+			        onExit 	   : function(){
+			        	console.log("State Exiting");
+			        }
+    		})
+    		  .state('page3', {
+			        url: '/page3',
+			        template: '<h1>Page 3</h1>'
+    		});
+});
+
+
+	app.controller('page2Controller', function($state){
+		console.log($state.current.data.name);
+
+	});
+</script>
+</body>
+</html>

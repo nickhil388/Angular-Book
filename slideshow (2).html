@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="script/angular.min.js"></script>
+</head>
+<body ng-app="app" ng-controller="mainController">
+
+
+
+<slideshow images="arr"> </slideshow>
+
+
+
+
+</div>
+
+<script type="text/javascript">
+	
+	var app=angular.module('app',[]);
+	app.directive('slideshow', function(){
+		return {
+			restrict : 'AE',
+			scope    :{
+				path : '=images'
+			
+			},
+			template : 'slideTemplate.html',
+			link     : function($scope,elem,attr){
+					$scope.index=0;
+						console.log($scope.path[$scope.index]);
+			}
+
+		}
+	});
+
+
+
+	app.controller('mainController', function($scope){
+		$scope.arr = ['images/1.jpg','images/2.jpg','images/3.jpg','images/4.jpg','images/5.jpg'];
+		
+	});
+
+
+</script>
+</body>
+</html>

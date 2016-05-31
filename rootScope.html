@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="script/angular.js"></script>
+</head>
+<body ng-app="app" >
+<div>
+
+<input type="text" ng-model="$rootScope.msg" />
+{{$rootScope.msg}}   
+</div>
+<br><br><br><br>
+<div ng-controller="mainController">
+
+<input type="text" ng-model="text" />
+
+{{text}}
+
+{{mas}}  
+
+<pre>  <input type="text" ng-model="info.firstname" />   <input type="text" ng-model="info.lastname" /> 
+    {{info.firstname}}                          {{info.firstname}}
+</pre>
+
+<br><br>
+
+
+</div>
+
+
+
+
+<script>
+var app = angular.module('app',[]);
+
+var scope = null;
+
+app.controller('mainController', function($scope,$rootScope){
+
+	$rootScope.msg = " I m with Root Scope";
+	$scope.text = "Some Text Here . . . ";
+	$scope.mas= "Some Other Text";
+	
+	$scope.info = {};
+
+	$scope.info.firstname = "Nikhil";
+	$scope.info.lastname = "Gautam";
+
+
+	//console.dir(Object.getPrototypeOf($scope));
+		
+
+	$scope.$watch('text', function(newVal){
+		console.log("text watcher Called : " +newVal);
+
+	});
+
+	$scope.$watch('mas', function(newVal){
+		console.log("mas watcher Called : " +newVal);
+	});
+
+	
+	$scope.$watchCollection('info', function(newVal,oldVal,scope){
+		console.log(scope) ;
+		
+
+	});
+	//$scope.msg[0]="asdsad";
+
+//	console.dir($rootScope);
+
+	// var myOb = $rootScope.$new();
+	// console.log(myOb);;
+	// myOb.name = "ALEX";
+	scope = $scope;
+	//console.log($scope);
+})
+
+
+</script>
+
+</body>
+</html>

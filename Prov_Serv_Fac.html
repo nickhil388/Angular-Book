@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="script/angular.min.js"></script>
+
+
+</head>
+<body ng-app="app" ng-controller="main">
+  
+
+  <div ng-controller="main">
+  		<b> Controller Main </b><br>
+  		{{message}}
+  		
+  		<br>
+  		<b> Service Message </b><br>
+  		{{serv_message}}
+  </div>
+<br><br>
+  <div ng-controller="second">
+  		<b> Controller Second </b><br>
+  		{{message}}
+  	
+  		<br>
+  		<b> Service Message</b><br>
+  		{{serv_message}}
+
+  </div>
+
+
+  <br><br>
+  <div ng-controller="third">
+  		 <b> Controller Second </b><br>
+  		{{message}}
+  	 
+  		<br>
+  		<b> Service Message</b><br>
+  		{{serv_message}}
+  		
+
+  </div>
+
+<script type="text/javascript">
+	var app = angular.module('app', []);
+		
+	app.factory('fact', function(){
+	
+	var instance = {};
+	instance.message = "Default"
+     return instance;
+	});
+
+	app.service('servic', function(){
+		var message="Hello, Default message service";
+
+		this.getMessage = function(){
+			return this.message;
+		}
+		this.setMessage = function(m){
+			this.message = m;
+		}
+		
+	});
+
+	app.provider('test', function(){
+
+			var message = "Hello, message from provider";
+		return {
+			setMessage: function(m){
+				message = m;
+			},
+			$get : function(){
+				return message;
+			}
+		}
+	});
+
+	// app.provider('test2', function(){
+	// 	return {
+	// 		this.
+	// 	}
+
+	// });
+
+	app.constant('author', {name: "nikhil"});
+
+
+	app.config(function(testProvider){
+
+			testProvider.setMessage("custom message by config");
+
+	});
+
+	app.controller('main', function ($scope, fact, servic) {
+			fact.message = "factory message changed by main controller";
+			$scope.message = fact.message;
+				
+			servic.setMessage("service message changed by  main controller");
+
+			$scope.serv_message = servic.getMessage();
+
+	});
+
+	app.controller('second', function ($scope, fact, servic ,author) {
+			fact.message = "factory message changed by second controller";
+			$scope.message = fact.message;
+			
+			//servic.message = "service message changed by controller";
+		//	servic.setMessage("service message changed by second controller");
+			//$scope.$digest();
+			$scope.serv_message = servic.getMessage();
+
+			author.name = "Some Other";
+			console.log(author.name);
+	});
+
+		app.controller('third', function ($scope, fact, servic,test, author) {
+			//fact.message = "message changed by controller2"
+			$scope.message = fact.message;
+			
+			//servic.message = "service message changed by controller";
+			//servic.setMessage("service message changed by second controller");
+			//$scope.$digest();
+			$scope.serv_message = servic.getMessage();	
+
+			console.log(test);
+			console.log(author.name);
+			//console.dir($scope);
+			this.name = "nikhil";
+	});
+
+
+</script>
+</body>
+</html>

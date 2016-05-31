@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+var $http = function(ob){
+	var promise = new Promise(function(resolve, response) {
+			var xhr = new XMLHttpRequest();
+			xhr.open(ob.method,ob.url, true);
+			xhr.send();
+			xhr.onreadystatechange=function processResponse(){	
+				if(xhr.readyState	===	4	&&	xhr.status	===	200){
+					resolve(xhr.response);
+				}
+			}
+	});
+
+	return promise;
+};
+
+
+$http({method:'GET',url:'/profile' }).then(function(res){
+	console.log(res);
+});
+
+
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="script/angular.js"></script>
+
+</head>
+<body ng-app="app" ng-controller="main">
+
+
+
+
+<script type="text/javascript">
+	var app = angular.module('app', []);
+
+	app.provider('my', function(){
+		this.$get = function(){
+			return "Provider Called";
+		}
+	});
+
+
+   
+	app.controller('main', function($injector){
+		console.log("Main controller");
+		console.log($injector.get('my'));
+	});
+
+
+	var injector = angular.injector(['ng', 'app']);
+
+   	//console.log(injector.get('my'));
+
+    injector.invoke(javascriptFunction);
+
+   	function javascriptFunction($http,my){
+   			console.log("javascriptFunction Called");
+   			console.log(my);
+   	}
+   	
+   	console.log('--- () ---');
+
+
+	//console.log('--- injector ---');
+	//console.log(injector);
+
+	console.log(app);
+</script>
+</body>
+</html>

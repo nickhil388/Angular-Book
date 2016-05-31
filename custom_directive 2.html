@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="script/angular.min.js"></script>
+  </head>
+<body ng-app="app" >
+<div ng-controller="mainController">
+
+<!-- <p greeting msg="Hi">   </p>
+<greeting> </greeting>
+<p class="greeting"  > </p>
+ -->
+
+
+<p greeting2 val="greeting">   </p>
+
+
+<p greeting2 f="doAlert()">   </p>
+
+<input type="text" ng-model="greeting" />
+</div>
+<script>
+var app = angular.module('app',[]);
+
+app.directive('greeting',function(){
+
+  return {
+        scope      : false,  
+        restrict   : 'AECM',
+        template   : '<h1>{{greeting}} </h1>',
+        
+        compile : function(element, attr) {
+          console.log("COMPILE");
+          return function($scope,element,attr){
+            console.log("LINK");
+             
+         }
+       }
+          
+  };
+        
+});
+
+
+app.directive('greeting2',function(){
+
+  return {
+        restrict   : 'AECM',
+        template   : '<h1> {{message}} {{greeting}} </h1>',
+        scope      : {
+                message : '=val',
+                doAlert: '&f'
+        },
+        link :  function($scope,ele,att){
+          $scope.message = "asdsasad";
+          console.log($scope.message);
+          $scope.doAlert();
+        }
+     };     
+});
+
+
+app.controller('mainController', function($scope){
+    $scope.greeting = "welcome to angular, custom directives.";
+    $scope.doAlert = function(){
+      alert('Function Called');
+    }
+});
+
+</script>
+</body>
+</html>

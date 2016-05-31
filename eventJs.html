@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+</head>
+<body>
+
+<button id="b">CLICK</button>
+
+<p id="p">   </p>
+<script type="text/javascript">
+	var i = 0;
+	var button = document.getElementById('b');
+
+	button.addEventListener('click',function () {
+		console.log("timeout called");
+		setTimeout(function(){
+		 	document.getElementById('p').innerHTML+=(i++);
+			console.log("Event A Called");
+		},2000);
+		console.log("timeout finished");
+			
+	});
+
+	button.addEventListener('click', function(){
+			//document.getElementById('p').innerHTML+=(i++);
+			console.log("Event B Called");
+	})
+	
+</script>
+
+</body>
+</html>

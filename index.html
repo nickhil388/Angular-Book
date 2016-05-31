@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app="MyApp" ng-controller="MainController">
+<h3 ng-mouseover="myStyle={'background-color':'grey'}" ng-style="myStyle" >Sample App - Angular JS </h3> <br>
+
+<input type="text" ng-model="msg"></input>
+<p>{{msg | customfilter}}</p> 
+<br>
+<b>Search in Array</b><br>
+<input type="text" ng-model="search_str"></input>
+
+<table>
+  <tr ng-repeat="t in arr | filterarr:search_str">
+    <td>{{ t }}</td>
+  </tr>
+</table>
+	
+
+
+<br>
+<b>Watch</b><br>
+<input type="text" ng-model="value"></input><br>
+<b>{{val2}}</b><br>
+
+
+
+<script type="text/javascript">
+var app = angular.module('MyApp',[]);
+
+app.filter('customfilter', function () {
+  return function (value) {
+    return value.toUpperCase();
+  };
+
+});
+
+app.filter('filterarr', function () {
+  return function (items, str) {
+  	var arr = [];
+ 	
+  	for(v in items){
+  	   
+  	   if(items[v].search(str)!=-1){
+  	   	arr.push(items[v]);
+  	   }
+  	}
+  	
+   return arr;
+  };
+
+});
+
+app.controller('MainController', function($scope) {
+	$scope.msg = "This is some text..";
+
+	$scope.arr = ["hello","world","using","angular","js","hunk","wros","unique","apache", "javascript","apcache" ];
+	
+	$scope.value=0;
+	$scope.val2=0;
+
+	var unregister = $scope.$watch('value', function (val) {
+  	 $scope.val2= val*2;
+  	  if($scope.val2>50){
+  	 		 unregister();
+  		}
+	});
+
+
+
+});	
+
+
+</script>
+</body>
+</html>

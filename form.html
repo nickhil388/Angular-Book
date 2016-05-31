@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="script/jquery.min.js"></script>	
+	<script type="text/javascript" src="script/angular.messages.min.js"></script>
+
+	<script type="text/javascript" src="script/angular.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+</head>
+<body ng-app="MyApp" ng-controller="MainController">
+
+<h3>Form</h3>
+
+
+
+<br>
+<div class="row" >
+	<div class="col-sm-3">
+
+	<form name="signup" required>
+			<label>First Name</label><input type="text" ng-model="fname" name="fname" class="form-control"  required/>
+			
+			
+			<p ng-show=" signup.fname.$touched && signup.fname.$invalid">Please enter first name.</p>
+
+			<label>Last Name</label><input type="text" ng-model="lname" name="lname" class="form-control"  required/>
+			<p ng-show="signup.lname.$touched && signup.lname.$valid.required">Please enter second name.</p>
+
+			<label>Email</label><input type="text" ng-model="email" name="email" class="form-control"  required/>
+			<p ng-show="signup.email.$touched && signup.email.$valid.required">Please enter email.</p>
+
+			<label>Gender </label>
+			<select class="form-control" name="gender" required>
+				<option>Male</option>
+				<option>Female</option>
+			</select>
+			<p ng-show="signup.gender.$touched && signup.gender.$valid.required">Please select gender.</p>
+
+			<label>Mobile </label><input type="text" ng-model="mobile" name="mobile" class="form-control"  required/>
+			<p ng-show="signup.mobile.$valid.required">Mobile number is required.</p>
+
+			<button type="submit" ng-disabled="signup.$invalid" class="btn btn-primary">Register</button>
+	</form>
+	</div>
+</div>
+
+<br><br><br>
+
+<div class="row" >
+	<div class="col-sm-3">
+
+	<form name="signup" required>
+			<label>First Name</label><input type="text" ng-model="fname" name="fname" class="form-control"  required/>
+			
+			
+			<div ng-messages="signup.fname.$error">
+			  		<div ng-message="required">This field is required</div>
+			</div>
+
+			<label>Last Name</label><input type="text" ng-model="lname" name="lname" class="form-control"  required/>
+			
+			<label>Email</label><input type="text" ng-model="email" name="email" class="form-control"  required/>
+			
+			<label>Gender </label>
+			<select class="form-control" name="gender" required>
+				<option>Male</option>
+				<option>Female</option>
+			</select>
+			
+			<label>Mobile </label><input type="text" ng-model="mobile" name="mobile" class="form-control" ng-minlength="6" ng-maxlength="10"  required/>
+			<div ng-messages="signup.mobile.$error" > 
+			 <div ng-message="minlength">Phone number should be have atleast 8 digits.</div>
+			 <div ng-message="maxlength">Phone number should be have atmost 8 digits.</div>
+
+			</div>
+
+
+
+			<button type="submit" ng-disabled="signup.$invalid" class="btn btn-primary">Register</button>
+	</form>
+	</div>
+</div>
+
+<label>Click me: <input type="checkbox" ng-model="checked" ng-init="checked=true" /></label><br/>
+Show when checked:
+<span ng-if="checked" class="animate-if">
+  This is removed when the checkbox is unchecked.
+</span>
+
+
+<div ng-include="Jquery.html"></div>
+
+
+<script type="text/javascript">
+	var app = angular.module('MyApp',['ngMessages']);
+	app.controller('MainController', function($scope){
+			console.dir($scope.signup)	;
+			//console.log($scope.signup.email.$dirty);
+	});
+
+</script>
+</body>
+</html>

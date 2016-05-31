@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="scripts/angular.min.js"></script>
+</head>
+<body ng-app="MyApp" >
+<div ng-controller="MainController">
+
+<h1> Promises - Angular JS </h1>
+
+
+</div>
+
+
+<script type="text/javascript">
+
+var app = angular.module('MyApp',[]);
+
+app.service('profile', function($http){
+  this.getInfo = function(){
+       var result =  $http({method:'GET',url:"/profile"});
+       return result;
+  }
+return this.getInfo();
+});
+
+app.controller('MainController', function(profile) {
+
+  console.log("Controller Initiated");
+  
+  profile.success(function(res){
+    console.log(res);
+  });
+
+  
+
+});
+
+</script>
+</body>
+</html>

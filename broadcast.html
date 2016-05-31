@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="script/angular.min.js"></script>
+</head>
+<body ng-app="MyApp" >
+
+<div ng-controller="controller1">
+  <button ng-click="broadCast();">Broadcast</button> 
+  <div ng-controller="controller2">
+        {{msg}}
+  </div>
+
+</div>
+______________________________
+
+<div ng-controller="controller3">
+   {{msg}}
+  <div ng-controller="controller4">
+       <button ng-click="emit();">Emit</button> 
+  </div>
+
+</div>
+
+<br><br>
+
+<div ng-controler="controller6"> </div>
+
+<div ng-controller="controller5">
+Using RootScope<br>
+
+
+
+{{message}}
+</div>
+  
+
+<script type="text/javascript">
+var app = angular.module('MyApp',[]);
+app.controller('controller1', function ($scope) {
+    
+  $scope.message = "Hello, message from parrent"  ;
+  $scope.broadCast = function(){
+    $scope.$broadcast('Broadcast_station', $scope.message);
+  }
+
+});
+
+app.controller('controller2', function($scope){
+  $scope.msg = "My Custom message client";
+  $scope.$on('Broadcast_station', function(event, message){
+    $scope.msg = message;
+  })
+});
+
+app.controller('controller3', function ($scope) {
+    
+  $scope.msg = ""  ;
+  
+  $scope.$on('Broadcast_station2', function(event, message){
+    $scope.msg = message;
+  });
+
+});
+
+app.controller('controller4', function ($scope) {
+    
+  $scope.message = "Hello, message from child"  ;
+  $scope.emit = function(){
+    $scope.$emit('Broadcast_station2', $scope.message);
+  }
+
+});
+
+
+app.controller('controller5', function ($scope, $rootScope) {
+  
+  $scope.message = $rootScope.msg;
+
+});
+
+app.controller('controller6', function ($scope, $rootScope) {
+  $rootScope.msg = "Hello, msg from rootScope.";
+});
+</script>
+</body>
+</html>

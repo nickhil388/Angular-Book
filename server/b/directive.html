@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script type="text/javascript" src="script/angular.min.js"></script>
+</head>
+<body ng-app="app" >
+<div popup>
+
+
+
+</div>
+
+<script type="text/javascript">
+	var app = angular.module('app',[]);
+
+	app.directive('popup', function(){
+
+		return {
+			restrict: 'AE',
+			link : function(scope,elem, attr){
+				alert('Called');
+			}
+		}
+	});
+
+</script>
+</body>
+</html>

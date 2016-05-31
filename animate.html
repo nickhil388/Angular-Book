@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="script/angular.min.js"></script>
+<script type="text/javascript" src="script/angular.animate.js"></script>
+
+
+</head>
+<body ng-app="app" ng-controller="main">
+<button ng-click="visible=!visible">Show/Hide</button>
+<div ng-show="visible" ng-hide-animate style="height:200px; width:200px;background-color: grey;">
+	<h3>Animations using Angular</h3>
+</div>
+  
+
+<div ng-include="template.html"> </div>
+<script type="text/javascript">
+	var app = angular.module('app', ['ngAnimate']);
+	app.controller('main', function ($scope) {
+			
+			$scope.visible = false;
+			
+	});
+
+
+</script>
+</body>
+</html>

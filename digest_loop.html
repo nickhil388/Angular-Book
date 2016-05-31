@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Digest Loop - Angular JS</title>
+	<script type="text/javascript" src="script/angular.min.js"></script>
+</head>
+<body ng-app="app" ng-controller="cont">
+
+<div>
+<pre>
+<input type="number" ng-model="val1" />      <input type="number" ng-model="val2" />
+ 
+{{val1}}    {{val2}} 
+
+
+ </pre>
+
+</div>
+
+<script type="text/javascript">
+	
+var app = angular.module('app',[]);
+app.controller('cont', function($scope) {
+	
+$scope.val1=0;
+$scope.val2=0;
+
+$scope.$watch('val1',function(newVal, oldVal,scope){
+	 //$scope.val2 = $scope.newVal;	
+	 scope.val2=newVal;
+	 console.log(newVal, oldVal);
+});
+
+$scope.$watch('val2',function(newVal, oldVal,scope){
+	 //$scope.val2 = $scope.newVal;	
+	 scope.val1=newVal+1;
+	 console.log(newVal, oldVal);
+});
+
+
+
+
+
+});
+
+
+
+
+</script>
+</body>
+</html>

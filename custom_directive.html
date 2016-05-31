@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="script/angular.min.js"></script>
+</head>
+
+<body ng-app="MyApp" ng-controller="MainController">
+
+<input type="text" ng-model="color_val" >
+<div color> This is some text in the div</div>
+
+<div hide-this> Angular is Powefull.</div>
+
+<a href link1>Go to link1 </a>
+
+
+<script type="text/javascript">
+
+
+
+
+var app = angular.module('MyApp',[]);
+app.directive("color", function(){
+  return {
+    restrict : "A",
+    link     : function(scope,element ){
+      element.css({"color":"blue"});
+    },
+    template : "<b>Scope Value : {{msg}}</b>"
+  }
+});
+
+app.directive('hideThis', function(){
+  return {
+      restrict : "A",
+      link     : function(scope, element, attr){
+          if(attr.hideThis!="")
+          {
+               if(JSON.parse(attr.hideThis)==true)
+               {
+                 element.css({"display":"none"});
+               }
+               else if(JSON.parse(attr.hideThis)==false)
+               {
+                 //element.css({"display":"block"});
+               }
+          } 
+          else
+          {
+              element.css({"display":"none"});
+          }
+      }
+  }
+
+});
+
+app.directive('link1', function(){
+  return {
+      restrict : "A",
+      link     : function(scope, element, attr){          
+          element.attr('href','http://www.google.com');
+      }
+  }
+
+});
+
+app.controller('MainController', function($scope) {
+    $scope.msg = "Hello Using Angular";
+
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script type="text/javascript" src="script/angular.js"></script>
+	<script type="text/javascript" src="script/angular-ui-router.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+
+
+<body ng-app="app">
+
+<!-- <div class="row" ng-controller="appController">
+	<div class="col-sm-4" ui-view="first"></div>
+	<div class="col-sm-2"><br><br> <h2 beautify>{{msg}}</h2><br><button class="btn btn-primary" ng-click="generateNumber()">Go!</button></div>
+	<div class="col-sm-4" ui-view="second"></div>
+
+</div> -->
+	<br><br><br><br>
+
+		<a ui-sref="root"  > root   </a>
+		<a ui-sref="child1" > Child1  </a>
+		<a ui-sref="child2" > Child2  </a>
+		
+	<div  ui-view>
+
+
+	</div>
+
+
+	<!-- <div ui-view="root.parent"></div> -->
+<script>
+var app=angular.module("app",["ui.router"]);app.directive("beautify",function(){return{restrict:"A",link:function(t,a,o){t.$on("state",function(t,o){o.status?a.css({color:"green"}):0==o.status&&a.css({color:"red"})})}}}),app.config([$stateProvider,$urlRouterProvider,function(t,a){t.state("root",{template:"<h1>TEMP</h1>"}).state("child1",{template:"<h1>Child 1</h1>"}).state("child2",{template:"<h1>Child 2</h1>"})}]),app.controller("appController",[$scope,function(t){t.msg="Start",t.generateNumber=function(){t.one=Math.floor(10*Math.random()+1),t.two=Math.floor(10*Math.random()+1),t.one==t.two?(t.msg="WIN",t.$broadcast("state",{status:1})):(t.msg="LOSE",t.$broadcast("state",{status:0}))}}]);
+
+
+</script>
+
+</body>
+</html>

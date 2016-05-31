@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DI2</title>
+	<script type="text/javascript" src="script/angular.js"></script>
+</head>
+<body >
+
+<b>Angular DI</b>
+
+
+<div ng-app="mod3" ng-controller="c3">{{a}}</div>
+
+
+
+<script>
+	var mod1 =  angular.module('mod1',[]);
+	mod1.factory('getCarId', function(){
+		return {
+			val:"CAR_DFG9789D7F897DSF7SD9F879SDF"
+		};
+		
+	});
+ 
+	mod1.controller('c1', function($scope,getId){
+		//console.log("Controller 1");
+		$scope.a="C1";
+		console.log(getId.val);
+
+	});
+
+
+
+
+
+
+	var mod2 =  angular.module('mod2',['mod1']);
+	mod1.factory('getCompanyId', function(){
+		return {
+			val:"COMPANY_KLJG9789D7F897DSF7SD9F8"
+		};
+		
+	});
+	/*
+	mod2.controller('c2',function($scope, getId){
+
+		  console.log(getId.val);	
+	});*/
+
+
+
+	var mod3 =  angular.module('mod3',['mod2']);
+	
+	mod3.controller('c3',function(getCarId, getCompanyId){
+
+		  console.log(getCompanyId.val);	
+		  console.log(getCarId.val);
+	});
+
+
+
+</script>
+</body>
+</html>
