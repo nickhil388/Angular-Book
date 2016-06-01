@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Broadcast Event</title>
+	<script type="text/javascript" src="script/angular.min.js"></script>
+</head>
+<body ng-app="app" >
+
+
+
+<div ng-controller="controllerOne"> </div>
+<div ng-controller="controllerTwo"> </div>
+
+<script type="text/javascript">
+	
+	app=angular.module('app',[]);
+	app.service('broadcast',function($rootScope,$http){
+		
+			$rootScope.$broadcast('server_msg', "Initiated ");
+		
+	});
+
+	app.controller('controllerOne',function ($rootScope,broadcast) {
+			
+			$rootScope.$on('server_msg',function(event,message){
+				console.log(message);
+			});
+	});
+
+
+	app.controller('controllerTwo',function (broadcast,$rootScope) {
+		
+			$rootScope.$on('server_msg',function(event,message){
+				console.log(message);
+			});
+	});
+
+
+</script>
+</body>
+</html>

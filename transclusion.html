@@ -8,10 +8,12 @@
 
 <div>
 
-<p some-directive> This is content of P tag </p>
+<!-- <p some-directive> This is content of P tag </p>
+ -->
+<p some-other> This is content of 2nd Ptag</p>
 
 
-
+<p sample>See Log </p>
 </div>
 
 <script>
@@ -25,6 +27,45 @@
 	});
 
 	
+	app.directive('someOther' , function(){
+		return {
+			transclude : true,
+			template   : '<h2>This is directives\'s content </h2>',
+			link       : function(scope,elem,attr,controller, transclude){
+					transclude(function(clone){
+						elem.append(clone);
+					});
+
+					transclude(function(clone){
+						elem.append(clone);
+					});
+			}
+		}
+	});
+
+
+	app.directive('sample', function(){
+			return {
+
+					controller : function(){
+						console.log("Controller function called");
+					},
+
+					compile : function(){
+						console.log("Compile function called");
+						return {
+							pre : function(){
+								console.log("Pre Link function called");
+							},
+							post : function(){
+								console.log("Post Link function called");
+							}
+						};
+					}
+
+			};
+	});
+
 </script>
 
 </body>

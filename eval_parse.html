@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Angular JS - $parse and $eval</title>
+
+	<script type="text/javascript" src="script/angular.min.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="mainController">
+
+{{a}}
+
+<script type="text/javascript">
+	var app = angular.module('app',[]);
+
+
+	app.controller('mainController', function($scope,$parse,){
+		$scope.a = 5;
+		// $scope.$eval('a=a+10');
+		var f = $parse('a=10');
+		f($scope);
+		console.log($scope.a);
+
+	});
+</script>
+</body>
+</html>
