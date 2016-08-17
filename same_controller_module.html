@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="scripts/angular.js"> </script>
+</head>
+<body ng-app="modB">
+
+<div ng-controller="controllerB">
+
+
+</div>
+
+
+<script>
+	
+var modA = angular.module('modA',[]);
+var modB = angular.module('modB',[]);
+
+modA.service('ServiceA', function(){
+	this.type = "A";
+});
+
+modA.controller('controllerA', function(){
+	console.log('Called A');
+});
+
+modB.controller('controllerB', function(ServiceA){
+	console.log(ServiceA.type);
+});
+
+var app = angular.module('app', ['modA','modB']);
+
+
+
+</script>
+
+</body>
+</html>

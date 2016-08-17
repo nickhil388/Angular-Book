@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Directive - Angular JS</title>
+	<script src="scripts/angular.js" >  </script>
+</head>
+<body ng-app="app" ng-controller="mainController">
+
+
+<div parent>
+		<div childd>
+
+		</div>
+</div>
+
+
+<div screen>
+    <div component>
+        
+    </div>
+</div>
+
+
+<div lnk ales="somesdasdsd">
+
+
+</div>
+<script>
+var app = angular.module('app',[]);
+
+app.directive('parent', function (){
+	return {
+			restrict  : 'AE',
+			scope     :{},
+			controller: function(){
+					console.log('parent instantiated.')
+					this.val = 26;
+					this.getsetValue = function(child){
+					console.log(child.value);
+				}
+			}		
+	};
+});
+
+app.directive('childd', function (){
+	return {
+			restrict   : 'AE',
+			require    : '^parent',
+			link	   : function($scope,elem,attr,parentCtrl){
+				console.log("in Child");
+				console.log(parentCtrl.val);
+				//console.log(parentCtrl.val);
+				//parentCtrl.getsetValue(45);
+			}
+
+	 };
+});
+
+app.directive('test', function(){
+	return { 
+		controller : function(){
+			console.log("controller");
+		},
+		compile : function(elem,attr){
+
+			console.log('Compile ')
+		 	return {
+		 	 pre :function($scope,elem,attr){
+				  console.log('Pre link');
+				},
+
+			 post : function($scope,elem,attr){
+			 	  console.log('Post link')
+			 }
+
+		  }
+		}
+	};
+});
+
+
+
+app.directive('screen', function() {
+    return {
+        scope: true,
+        controller: function() {
+            this.doSomethingScreeny = function() {
+               // alert("screeny!");
+            }
+        }
+    }
+})
+
+app.directive('component', function() {
+    return {
+        scope: true,
+        require: '^screen',
+        controller: function($scope) {
+            this.componentFunction = function() {
+                $scope.screenCtrl.doSomethingScreeny();
+            }
+        },
+        link: function(scope, element, attrs, screenCtrl) {
+            screenCtrl.doSomethingScreeny(); 	
+
+        }
+    }
+})
+
+app.directive('lnk', function(){
+	return {
+		scope :{name : "@ales"},
+		link : function(scope,element,attr){
+			console.log(scope.name);
+		}
+	}
+});
+
+
+app.controller('mainController', function(){
+	//console.log('Controller instantiated .');
+});
+
+
+
+</script>
+</body>
+</html>

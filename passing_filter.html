@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="scripts/angular.js"> </script>
+</head>
+<body ng-app="app">
+
+<div ng-controller="controller">
+
+{{ name | cap }}
+
+</div>
+<script>
+
+	var app = angular.module('app', []);
+
+	app.filter('cap', function(){
+		return function(val){
+			return  val[0].toUpperCase();
+		}
+	});
+
+	app.controller('controller', function($scope,$filter){
+		$scope.name = 'alex';
+
+		console.log($filter('cap')('nikhil')); 	
+
+	});
+
+</script>
+</body>
+</html>
