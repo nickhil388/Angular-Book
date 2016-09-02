@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="scripts/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="mod2" ng-controller="mod2controller"> 
+
+Module : "mod2" <br>
+Controller : "mod2controller"
+</div>
+
+
+
+<script>
+// Case 
+// app module is dependent on two modules i.e mod1 and mod2
+// mod2 module is dependent on module mod1
+//
+//		mod1 - - - ->mod2
+//		\			  /	
+//		 \->  APP  <-/
+
+
+// Module Definition
+var mod1 = angular.module('mod1',[]);
+var mod2 = angular.module('mod2', ['mod1']);
+var app = angular.module('app', ['mod2']);	
+
+//Service Definiton
+mod1.service('service1', function() {
+	this.getMessage = function(){
+		return "Module 1, Service  Loaded";
+	}
+})
+
+mod2.service('service2', function() {
+	this.getMessage = function(){
+		return "Module 2, Service  Loaded";
+	}
+})
+
+app.service('appservice', function() {
+	this.getMessage = function(){
+		return "Module App, Service  Loaded";
+	}
+})
+// Controller Definition
+
+
+
+app.controller('appcontroller', function(appservice, service2, service1){
+	console.log("App Controller Loaded");
+	console.log(appservice.getMessage());
+	console.log(service2.getMessage());
+	console.log(service1.getMessage());
+});
+
+
+mod1.controller('mod1controller', function(appservice, service2, service1){
+	console.log("mod1 Controller Loaded");
+	console.log(appservice.getMessage());
+	console.log(service2.getMessage());
+	console.log(service1.getMessage());
+});
+
+
+
+mod2.controller('mod2controller', function(appservice, service2, service1){
+	console.log("mod2 Controller Loaded");
+	console.log(appservice.getMessage());
+	console.log(service2.getMessage());
+	console.log(service1.getMessage());
+});
+
+/*
+
+	Mod1
+    |  |_ service1
+    |  |_ mod1controller
+    V   
+    Mod2
+    |  |_ service2
+    |  |_ mod2controller
+    |  |_ service1
+    |  |_ mod1controller
+	|
+	V
+	App 
+       |_ appservice
+       |_ appcontroller
+       |_ service2
+       |_ mod2controller
+       |_ service1
+       |_ mod1controller
+
+
+*/
+</script>
+</body>
+</html>
